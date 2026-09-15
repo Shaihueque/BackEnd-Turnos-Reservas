@@ -1,0 +1,18 @@
+[
+        {
+            "id": 1,
+            "name": "Gimnasio",
+            "duration": "60 Minutos",
+            "price": 10000,
+            "category": "salud",
+            "available": true
+        },
+        {
+            "id": 2,
+            "name": "Masajes descontracturantes y relajantes",
+            "duration": 45,
+            "price": 15000,
+            "category": "relajacion",
+            "available": true
+        }
+    ]

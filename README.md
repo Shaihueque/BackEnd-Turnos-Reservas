@@ -95,6 +95,98 @@ Back-End-Turno-Y-Reservas/
 └── package-lock.json
 ```
 
+## ⚙️ Instalación
+
+Para ejecutar el proyecto localmente, seguí los siguientes pasos.
+
+### 1. Clonar el repositorio
+
+```bash
+git clone https://github.com/Shaihueque/BackEnd-Turnos-Reservas.git
+```
+
+### 2. Ingresar al directorio del proyecto
+
+```bash
+cd BackEnd-Turnos-Reservas
+```
+
+### 3. Instalar las dependencias
+
+Ejecutar el siguiente comando para instalar las dependencias necesarias:
+
+```bash
+npm install
+```
+
+## 🔐 Variables de entorno
+
+El proyecto utiliza variables de entorno para configurar el puerto del servidor y el modo de ejecución.
+
+En la raíz del proyecto, crear un archivo llamado `.env`:
+
+```env
+PORT=8080
+NODE_ENV=development
+```
+
+### Variables disponibles
+
+| Variable | Descripción | Ejemplo |
+|----------|-------------|---------|
+| `PORT` | Puerto donde se ejecuta el servidor | `8080` |
+| `NODE_ENV` | Entorno de ejecución de la aplicación | `development` |
+
+> ⚠️ El archivo `.env` no debe subirse al repositorio. Utilizá `.env.example` como referencia para configurar las variables necesarias.
+
+## ▶️ Ejecución del proyecto
+
+### Modo producción / normal
+
+Para iniciar el servidor:
+
+```bash
+npm run start
+```
+
+Este comando ejecuta:
+
+```bash
+node src/server.js
+```
+
+### Modo desarrollo
+
+Para ejecutar el proyecto en modo desarrollo, utilizando el reinicio automático de Node.js:
+
+```bash
+npm run dev
+```
+
+Este comando ejecuta:
+
+```bash
+node --watch src/server.js
+```
+
+## 🛠️ Scripts disponibles
+
+| Comando | Descripción |
+|---------|-------------|
+| `npm run start` | Inicia el servidor |
+| `npm run dev` | Inicia el servidor en modo desarrollo con reinicio automático |
+| `npm run test` | Comando de pruebas actualmente no configurado |
+
+## 🌐 Servidor local
+
+Una vez iniciado el proyecto, el servidor se ejecutará en el puerto configurado en el archivo `.env`.
+
+Por defecto:
+
+```text
+http://localhost:8080
+```
+
 ## 👨‍💻 Autor
 
 **Julian Jara Aguirre**

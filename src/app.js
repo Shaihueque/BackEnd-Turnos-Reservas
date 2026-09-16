@@ -2,8 +2,7 @@ import express from 'express';
 import path from "node:path"
 import { fileURLToPath } from "node:url"
 
-import {
-  getServices, addService } from "./managers/ServiceManager.js"
+import {getServices, getServiceById, addService, updateService, deleteService} from "./managers/ServiceManager.js"
 
 
 export const app = express();
@@ -78,7 +77,7 @@ app.post("/api/services", async (req, res) => {
   try {
     const { name, duration, price, category, available } = req.body
 
-    if ( !name || duration === undefined || price === undefined || !category || available === undefined) {
+    if ( !name || description === undefined || duration === undefined || price === undefined || !category || available === undefined) {
       return res.status(400).json({
         status: "error",
         message: "Todos los campos son obligatorios"

@@ -24,6 +24,7 @@ export async function addService(path, serviceData) {
   const newService = {
     id: randomUUID(),
     name: serviceData.name,
+    description: serviceData.description,
     duration: serviceData.duration,
     price: serviceData.price,
     category: serviceData.category,

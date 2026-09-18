@@ -3,7 +3,7 @@
             "id": 1,
             "name": "Gimnasio",
             "description": "Hay un cupo limitado para el gimnasio, y para que el profesor pueda prestar atencion a todos, solo damos un limite del cupo",
-            "duration": "60 Minutos",
+            "duration": 60,
             "price": 10000,
             "category": "salud",
             "available": true

@@ -55,44 +55,47 @@ El sistema permite administrar los servicios disponibles y gestionar las reserva
 ---
 
 ```text
-Back-End-Turno-Y-Reservas/
+BackEnd-Turnos-Reservas/
 │
-├── src/
+├── 📁 node_modules/
+│
+├── 📁 src/
 │   │
-│   ├── config/
+│   ├── 📁 config/
 │   │   └── env.config.js
 │   │
-│   ├── controllers/
+│   ├── 📁 controllers/
 │   │
-│   ├── dao/
+│   ├── 📁 dao/
 │   │
-│   ├── data/
+│   ├── 📁 data/
 │   │   └── services.json
 │   │
-│   ├── managers/
+│   ├── 📁 managers/
 │   │   └── ServiceManager.js
 │   │
-│   ├── middlewares/
+│   ├── 📁 middlewares/
 │   │
-│   ├── models/
+│   ├── 📁 models/
 │   │
-│   ├── repositories/
+│   ├── 📁 repositories/
 │   │
-│   ├── routes/
+│   ├── 📁 routes/
+│   │   └── services.router.js
 │   │
-│   ├── services/
+│   ├── 📁 services/
 │   │
-│   ├── utils/
+│   ├── 📁 utils/
 │   │
 │   ├── app.js
 │   └── server.js
 │
-├── README.md
 ├── .env
 ├── .env.example
 ├── .gitignore
+├── package-lock.json
 ├── package.json
-└── package-lock.json
+└── README.md
 ```
 
 ## ⚙️ Instalación

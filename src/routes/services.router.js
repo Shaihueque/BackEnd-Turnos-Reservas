@@ -1,29 +1,39 @@
 import express from "express"
 
-import path from "node:path"
-import { fileURLToPath } from "node:url"
 import {getServices, getServiceById, addService, updateService, deleteService} from "../managers/ServiceManager.js"
 
 //import {getAllServices, getService, createService, updateService, deleteService} from ""
 
 const router = express.Router()
 
-const __filename = fileURLToPath(import.meta.url)
-console.log(import.meta)
-const __dirname = path.dirname(__filename)
-
-// Construimos la ruta absoluta al archivo JSON.
-const servicesPath = path.join(__dirname, "data", "services.json")
-
 // READ: obtiene todos los servicios.
 router.get("/", async (req, res) => {
   try {
-    const services = await getServices(servicesPath)
+    const { category, available } = req.query
+
+    const services = await getServices()
+
+    let filteredServices = services
+
+    // Filtrar por categoría
+    if (category) {
+      filteredServices = filteredServices.filter(
+        service => service.category === category
+      )
+    }
+
+    // Filtrar por disponibilidad
+    if (available !== undefined) {
+      filteredServices = filteredServices.filter(
+        service => service.available === (available === "true")
+      )
+    }
 
     res.status(200).json({
       status: "success",
-      data: services
+      data: filteredServices
     })
+
   } catch (error) {
     console.error(error)
 
@@ -37,10 +47,7 @@ router.get("/", async (req, res) => {
 // READ: obtiene un servicio por ID.
 router.get("/:sid", async (req, res) => {
   try {
-    const service = await getServiceById(
-      servicesPath,
-      req.params.sid
-    )
+    const service = await getServiceById(req.params.sid)
 
     if (!service) {
       return res.status(404).json({
@@ -75,10 +82,7 @@ router.post("/", async (req, res) => {
       })
     }
 
-    const newService = await addService(
-      servicesPath,
-      req.body
-    )
+    const newService = await addService(req.body)
 
     res.status(201).json({
       status: "success",
@@ -97,11 +101,7 @@ router.post("/", async (req, res) => {
 // UPDATE: modifica un servicio.
 router.put("/:sid", async (req, res) => {
   try {
-    const updatedService = await updateService(
-      servicesPath,
-      req.params.sid,
-      req.body
-    )
+    const updatedService = await updateService(req.params.sid, req.body)
 
     if (!updatedService) {
       return res.status(404).json({
@@ -127,10 +127,7 @@ router.put("/:sid", async (req, res) => {
 // DELETE: elimina un servicio.
 router.delete("/:sid", async (req, res) => {
   try {
-    const deleted = await deleteService(
-      servicesPath,
-      req.params.sid
-    )
+    const deleted = await deleteService(req.params.sid)
 
     if (!deleted) {
       return res.status(404).json({

@@ -1,20 +1,38 @@
 [
-        {
-            "id": 1,
-            "name": "Gimnasio",
-            "description": "Hay un cupo limitado para el gimnasio, y para que el profesor pueda prestar atencion a todos, solo damos un limite del cupo",
-            "duration": 60,
-            "price": 10000,
-            "category": "salud",
-            "available": true
-        },
-        {
-            "id": 2,
-            "name": "Masajes descontracturantes y relajantes",
-            "description": "Masajes descontracturantes y relajantes",
-            "duration": 45,
-            "price": 15000,
-            "category": "relajacion",
-            "available": true
-        }
-    ]
+  {
+    "id": "1",
+    "name": "Gimnasio",
+    "description": "Hay un cupo limitado para el gimnasio, y para que el profesor pueda prestar atencion a todos, solo damos un limite del cupo",
+    "duration": 60,
+    "price": 10000,
+    "category": "salud",
+    "available": true
+  },
+  {
+    "id": "2",
+    "name": "Masajes descontracturantes y relajantes",
+    "description": "Masajes descontracturantes y relajantes",
+    "duration": 45,
+    "price": 15000,
+    "category": "relajacion",
+    "available": true
+  },
+  {
+    "id": "3",
+    "name": "Pileta termica - Termas",
+    "description": "Pileta con agua termales para relajarse",
+    "duration": 15,
+    "price": 7000,
+    "category": "relajacion",
+    "available": true
+  },
+  {
+    "id": "797cb75b-a000-47e9-9f02-ef240ba7078f",
+    "name": "Yoga",
+    "description": "Clase de yoga para principiantes",
+    "duration": 60,
+    "price": 12000,
+    "category": "salud",
+    "available": true
+  }
+]

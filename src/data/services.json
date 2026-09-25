@@ -34,5 +34,14 @@
     "price": 12000,
     "category": "salud",
     "available": true
+  },
+  {
+    "id": "51ab0fda-3cf1-4f14-82ca-a143e395774e",
+    "name": "Masajes facial",
+    "description": "Masaje facial para relajacion y cuidado de la piel",
+    "duration": 20,
+    "price": 11000,
+    "category": "relajacion",
+    "available": true
   }
 ]

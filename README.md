@@ -65,14 +65,18 @@ BackEnd-Turnos-Reservas/
 │   │   └── env.config.js
 │   │
 │   ├── 📁 controllers/
+│   │   ├── bookings.controller.js
+│   │   └── services.controller.js
 │   │
 │   ├── 📁 dao/
 │   │
 │   ├── 📁 data/
-│   │   └── services.json
+│   │   ├── services.json
+│   │   └── bookings.json
 │   │
 │   ├── 📁 managers/
-│   │   └── ServiceManager.js
+│   │   ├── ServiceManager.js
+│   │   └── BookingManager.js
 │   │
 │   ├── 📁 middlewares/
 │   │
@@ -81,7 +85,8 @@ BackEnd-Turnos-Reservas/
 │   ├── 📁 repositories/
 │   │
 │   ├── 📁 routes/
-│   │   └── services.router.js
+│   │   ├── services.router.js
+│   │   └── bookings.router.js
 │   │
 │   ├── 📁 services/
 │   │

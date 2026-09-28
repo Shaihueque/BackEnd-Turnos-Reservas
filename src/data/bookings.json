@@ -12,5 +12,14 @@
         "quantity": 2
       }
     ]
+  },
+  {
+    "id": "ed000720-5df2-48a8-a4c4-809723722146",
+    "clientName": "Juan Perez",
+    "clientEmail": "juan@gmail.com",
+    "date": "2026-09-30",
+    "time": "18:00",
+    "status": "pending",
+    "services": []
   }
 ]

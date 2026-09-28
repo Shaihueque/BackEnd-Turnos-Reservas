@@ -33,10 +33,29 @@ export async function controllerGetBookingById(req, res) {
 
 export async function controllerCreateAddBooking(req, res) {
     try {
+
+        const {clientName, clientEmail, date, time, status} = req.body
+
+        if (
+            !clientName || !clientEmail || !date || !time || !status) {
+            return res.status(400).json({
+                status: "error",
+                message: "Todos los campos son obligatorios"
+            })
+        }
+
         const newBooking = await addBooking(req.body)
-        res.status(201).json({ status: "success", data: newBooking })
+
+        res.status(201).json({
+            status: "success",
+            data: newBooking
+        })
+
     } catch (error) {
-        res.status(500).json({ status: "error", message: error.message })
+        res.status(500).json({
+            status: "error",
+            message: error.message
+        })
     }
 }
 

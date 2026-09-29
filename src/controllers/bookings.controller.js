@@ -1,6 +1,6 @@
-import {getBookings, getBookingById, addBooking,addServiceToBooking, updateBooking, deleteBooking} from "../managers/BookingManager.js"
+import {getBookings, getBookingById, addBooking,addServiceToBooking, updateBooking, deleteBooking} from "../services/bookings.service.js"
 
-import { getServiceById } from "../managers/ServiceManager.js"
+import { getServiceById } from "../services/services.service.js"
 
 export async function controllerGetAllBookings(req, res) {
 

@@ -54,6 +54,8 @@ El sistema permite administrar los servicios disponibles y gestionar las reserva
 
 ---
 
+## 📁 Estructura del proyecto
+
 ```text
 BackEnd-Turnos-Reservas/
 │
@@ -69,6 +71,8 @@ BackEnd-Turnos-Reservas/
 │   │   └── services.controller.js
 │   │
 │   ├── 📁 dao/
+│   │   ├── bookings.dao.js
+│   │   └── services.dao.js
 │   │
 │   ├── 📁 data/
 │   │   ├── bookings.json
@@ -83,12 +87,16 @@ BackEnd-Turnos-Reservas/
 │   ├── 📁 models/
 │   │
 │   ├── 📁 repositories/
+│   │   ├── bookings.repository.js
+│   │   └── services.repository.js
 │   │
 │   ├── 📁 routes/
 │   │   ├── bookings.router.js
 │   │   └── services.router.js
 │   │
 │   ├── 📁 services/
+│   │   ├── bookings.service.js
+│   │   └── services.service.js
 │   │
 │   ├── 📁 utils/
 │   │
@@ -101,7 +109,8 @@ BackEnd-Turnos-Reservas/
 ├── package-lock.json
 ├── package.json
 └── README.md
-```
+
+**Nota:** mantuve `managers/` porque `BookingManager.js` y `ServiceManager.js` los deje en el proyecto hasta estar seguro de que todo funciona bien. Si cumple con los requisitos de aprobar, ya elimino la carpeta.
 
 ## ⚙️ Instalación
 

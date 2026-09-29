@@ -1,4 +1,4 @@
-import {getServices, getServiceById, addService, updateService, deleteService} from "../managers/ServiceManager.js"
+import {getServices, getServiceById, addService, updateService, deleteService} from "../services/services.service.js"
 
 export async function controllerGetAllServices(req, res) {
 

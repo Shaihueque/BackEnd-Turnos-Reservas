@@ -1,5 +1,6 @@
 import { randomUUID } from "crypto"
 import * as repository from "../repositories/bookings.repository.js"
+import { getServiceById } from "../services/services.service.js"
 
 export async function getBookings() {
   return repository.getAllBookings()
@@ -16,7 +17,21 @@ export async function addBooking(data) {
 }
 
 export async function addServiceToBooking(bookingId, serviceId) {
+
+  const booking = await repository.getById(bookingId)
+
+  if (!booking) {
+    return { error: "BOOKING_NOT_FOUND" }
+  }
+
+  const service = await getServiceById(serviceId)
+
+  if (!service) {
+    return { error: "SERVICE_NOT_FOUND" }
+  }
+
   return repository.createServiceToBooking(bookingId, serviceId)
+
 }
 
 export async function updateBooking(id, changes) {

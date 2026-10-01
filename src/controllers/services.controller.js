@@ -5,27 +5,14 @@ export async function controllerGetAllServices(req, res) {
     try {
     const { category, available } = req.query
 
-    const services = await getServices()
-
-    let filteredServices = services
-
-    // Filtrar por categoría
-    if (category) {
-      filteredServices = filteredServices.filter(
-        service => service.category === category
-      )
-    }
-
-    // Filtrar por disponibilidad
-    if (available !== undefined) {
-      filteredServices = filteredServices.filter(
-        service => service.available === (available === "true")
-      )
-    }
+    const services = await getServices({
+      category,
+      available
+    })
 
     res.status(200).json({
       status: "success",
-      data: filteredServices
+      data: services
     })
 
   } catch (error) {

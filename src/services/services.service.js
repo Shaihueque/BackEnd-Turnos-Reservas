@@ -1,8 +1,28 @@
 import { randomUUID } from "crypto"
 import * as repository from "../repositories/services.repository.js"
 
-export async function getServices() {
-  return repository.getAllServices()
+export async function getServices(filters = {}) {
+
+  const services = await repository.getAllServices()
+
+  const { category, available } = filters
+
+  let filteredServices = services
+
+  // Filtrar por categoría
+  if (category) {
+    filteredServices = filteredServices.filter(
+      service => service.category === category
+    )
+  }
+// Filtrar por disponibilidad
+  if (available !== undefined) {
+    filteredServices = filteredServices.filter(
+      service => service.available === (available === "true")
+    )
+  }
+
+  return filteredServices
 }
 
 export async function getServiceById(id) {

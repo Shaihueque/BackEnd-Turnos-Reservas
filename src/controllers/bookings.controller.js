@@ -1,7 +1,5 @@
 import {getBookings, getBookingById, addBooking,addServiceToBooking, updateBooking, deleteBooking} from "../services/bookings.service.js"
 
-import { getServiceById } from "../services/services.service.js"
-
 export async function controllerGetAllBookings(req, res) {
 
     try {
@@ -18,16 +16,29 @@ export async function controllerGetAllBookings(req, res) {
 
 export async function controllerGetBookingById(req, res) {
     try {
+
         const { bid } = req.params
+
         const booking = await getBookingById(bid)
 
         if (!booking) {
-            return res.status(404).json({ status: "error", message: "Booking not found" })
+            return res.status(404).json({
+                status: "error",
+                message: "Booking not found"
+            })
         }
 
-        res.status(200).json({ status: "success", data: booking })
+        res.status(200).json({
+            status: "success",
+            data: booking
+        })
+
     } catch (error) {
-        res.status(500).json({ status: "error", message: error.message })
+
+        res.status(500).json({
+            status: "error",
+            message: error.message
+        })
     }
 }
 
@@ -64,32 +75,25 @@ export async function controllerAddServiceToBooking(req, res) {
 
         const { bid, sid } = req.params
 
-        // Verificamos que exista la reserva
-        const booking = await getBookingById(bid)
+        const result = await addServiceToBooking(bid, sid)
 
-        if (!booking) {
+        if (result?.error === "BOOKING_NOT_FOUND") {
             return res.status(404).json({
                 status: "error",
                 message: "Booking not found"
             })
         }
 
-        // Verificamos que exista el servicio
-        const service = await getServiceById(sid)
-
-        if (!service) {
+        if (result?.error === "SERVICE_NOT_FOUND") {
             return res.status(404).json({
                 status: "error",
                 message: "Service not found"
             })
         }
 
-        // Agregamos el servicio a la reserva
-        const updatedBooking = await addServiceToBooking(bid, sid)
-
         res.status(200).json({
             status: "success",
-            data: updatedBooking
+            data: result
         })
 
     } catch (error) {

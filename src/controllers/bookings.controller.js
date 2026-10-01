@@ -126,11 +126,18 @@ export async function controllerDeleteBooking(req, res) {
         const deleted = await deleteBooking(bid)
 
         if (!deleted) {
-            return res.status(404).json({ status: "error", message: "Booking not found" })
+            return res.status(404).json({
+                status: "error",
+                message: "Booking not found"
+            })
         }
 
-        res.status(200).json({ status: "success", message: "Booking deleted successfully" })
+        res.status(204).send()
+
     } catch (error) {
-        res.status(500).json({ status: "error", message: error.message })
+        res.status(500).json({
+            status: "error",
+            message: error.message
+        })
     }
 }

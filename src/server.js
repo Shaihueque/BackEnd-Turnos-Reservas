@@ -1,9 +1,16 @@
-import { app } from './app.js';
-import { config } from './config/env.config.js';
+import { app } from './app.js'
+import { connectDB } from "./config/database.config.js"
+import { config } from './config/env.config.js'
 
-app.listen(config.port, () => {
-  console.log(`Servidor corriendo en modo ${config.nodeEnv} en el puerto ${config.port}`);
-});
+connectDB().then(() => {
 
-console.log('Aplicación inicializada');
-console.log(app);
+    app.listen(config.port, () => {
+        console.log(
+            `Servidor corriendo en modo ${config.nodeEnv} en el puerto ${config.port}`
+        )
+    })
+
+})
+
+console.log('Aplicación inicializada')
+console.log(app)

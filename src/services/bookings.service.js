@@ -1,4 +1,3 @@
-import { randomUUID } from "crypto"
 import * as repository from "../repositories/bookings.repository.js"
 import { getServiceById } from "../services/services.service.js"
 
@@ -11,9 +10,7 @@ export async function getBookingById(id) {
 }
 
 export async function addBooking(data) {
-  // El cliente no elige el ID: lo genera el servidor.
-  const newData = { ...data, id: randomUUID() }
-  return repository.create(newData)
+  return repository.create(data)
 }
 
 export async function addServiceToBooking(bookingId, serviceId) {

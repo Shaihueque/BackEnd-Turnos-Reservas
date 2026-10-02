@@ -4,9 +4,11 @@
 
 **Culmen Hotel & SPA** es un proyecto desarrollado como parte del curso **Back End I**, cuyo objetivo principal es poner en práctica los conocimientos adquiridos durante la cursada.
 
-El proyecto consiste en desarrollar un sistema backend para la gestión de **turnos y reservas de servicios de un hotel SPA**.
+El proyecto consiste en desarrollar una API backend para la gestión de **turnos y reservas de servicios de un hotel SPA**.
 
-La aplicación permite gestionar los diferentes servicios ofrecidos por el hotel, así como también administrar los turnos y reservas realizados por los clientes.
+La aplicación permite gestionar los diferentes servicios ofrecidos por el hotel, así como también administrar las reservas realizadas por los clientes.
+
+La persistencia de los datos se realiza mediante **MongoDB Atlas**, utilizando **Mongoose** como herramienta de modelado y acceso a la base de datos.
 
 ## 🎯 Objetivos del proyecto
 
@@ -14,91 +16,89 @@ El objetivo principal es aplicar los conceptos y herramientas aprendidos durante
 
 Entre las funcionalidades principales se encuentran:
 
-- 📅 Crear y gestionar turnos.
-- 🏨 Realizar reservas de servicios.
-- ➕ Crear nuevos servicios.
-- ✏️ Actualizar servicios existentes.
-- 🗑️ Eliminar servicios.
-- 🔎 Consultar los servicios disponibles.
-- 📋 Gestionar la información relacionada con las reservas.
+* 📅 Crear y gestionar reservas.
+* 🏨 Asociar servicios a las reservas.
+* ➕ Crear nuevos servicios.
+* ✏️ Actualizar servicios existentes.
+* 🗑️ Eliminar servicios.
+* 🔎 Consultar los servicios disponibles.
 
 ## 🛠️ Tecnologías utilizadas
 
-- Node.js
-- Express
-- JavaScript
-- dotenv
-- REST API
+* Node.js
+* Express
+* JavaScript
+* MongoDB Atlas
+* Mongoose
+* dotenv
+* REST API
 
 ## 📚 Conceptos aplicados
 
 Durante el desarrollo del proyecto se ponen en práctica diferentes conceptos relacionados con el desarrollo backend, entre ellos:
 
-- Arquitectura en capas.
-- Controllers.
-- Services.
-- DAOs / Repositories.
-- Rutas y endpoints.
-- Middleware.
-- Variables de entorno.
-- Manejo de errores.
-- Operaciones CRUD.
-- Arquitectura RESTful.
-- Se agregaran mas de ser necesario.
+* Arquitectura en capas.
+* Controllers.
+* Services.
+* DAOs / Repositories.
+* Modelos con Mongoose.
+* Persistencia de datos con MongoDB Atlas.
+* Relaciones entre documentos mediante ObjectId y referencias.
+* Rutas y endpoints.
+* Middleware.
+* Variables de entorno.
+* Manejo de errores.
+* Operaciones CRUD.
+* Arquitectura RESTful.
 
 ## 🏨 Sobre Culmen Hotel & SPA
 
 **Culmen Hotel & SPA** busca representar un sistema de gestión para un hotel que ofrece diferentes servicios de bienestar y relajación.
 
-El sistema permite administrar los servicios disponibles y gestionar las reservas y turnos de los clientes de manera organizada.
+El sistema permite administrar los servicios disponibles y gestionar las reservas de los clientes de manera organizada.
 
 ---
 
 ## 📁 Estructura del proyecto
 
 ```text
-BackEnd-Turnos-Reservas/
-│
-├── 📁 node_modules/
-│
-├── 📁 src/
+Back-End-Turno-Y-Reservas/
+├── node_modules/
+├── src/
+│   ├── config/
+│   │   ├── env.config.js
+│   │   └── database.config.js
 │   │
-│   ├── 📁 config/
-│   │   └── env.config.js
-│   │
-│   ├── 📁 controllers/
+│   ├── controllers/
 │   │   ├── bookings.controller.js
 │   │   └── services.controller.js
 │   │
-│   ├── 📁 dao/
+│   ├── dao/
 │   │   ├── bookings.dao.js
 │   │   └── services.dao.js
 │   │
-│   ├── 📁 data/
-│   │   ├── bookings.json
-│   │   └── services.json
+│   ├── managers/
 │   │
-│   ├── 📁 managers/
-│   │   ├── BookingManager.js
-│   │   └── ServiceManager.js
+│   ├── middlewares/
 │   │
-│   ├── 📁 middlewares/
+│   ├── models/
+│   │   ├── bookings.model.js
+│   │   ├── messages.model.js
+│   │   └── services.model.js
 │   │
-│   ├── 📁 models/
-│   │
-│   ├── 📁 repositories/
+│   ├── repositories/
 │   │   ├── bookings.repository.js
 │   │   └── services.repository.js
 │   │
-│   ├── 📁 routes/
+│   ├── routes/
 │   │   ├── bookings.router.js
 │   │   └── services.router.js
 │   │
-│   ├── 📁 services/
+│   ├── services/
 │   │   ├── bookings.service.js
 │   │   └── services.service.js
 │   │
-│   ├── 📁 utils/
+│   ├── utils/
 │   │
 │   ├── app.js
 │   └── server.js
@@ -109,12 +109,11 @@ BackEnd-Turnos-Reservas/
 ├── package-lock.json
 ├── package.json
 └── README.md
-
-**Nota:** mantuve `managers/` porque `BookingManager.js` y `ServiceManager.js` los deje en el proyecto hasta estar seguro de que todo funciona bien. Si cumple con los requisitos de aprobar, ya elimino la carpeta.
+```
 
 ## ⚙️ Instalación
 
-Para ejecutar el proyecto localmente, seguí los siguientes pasos.
+Para ejecutar el proyecto localmente, seguir los siguientes pasos.
 
 ### 1. Clonar el repositorio
 
@@ -136,25 +135,60 @@ Ejecutar el siguiente comando para instalar las dependencias necesarias:
 npm install
 ```
 
+### 4. Configurar las variables de entorno
+
+Crear un archivo `.env` en la raíz del proyecto utilizando `.env.example` como referencia.
+
+Completar las variables necesarias para la configuración del servidor y la conexión con MongoDB Atlas.
+
+> ⚠️ No subir el archivo `.env` al repositorio, ya que puede contener información sensible.
+
 ## 🔐 Variables de entorno
 
-El proyecto utiliza variables de entorno para configurar el puerto del servidor y el modo de ejecución.
+El proyecto utiliza variables de entorno para configurar el puerto del servidor, el modo de ejecución y la conexión con MongoDB Atlas.
 
 En la raíz del proyecto, crear un archivo llamado `.env`:
 
 ```env
 PORT=8080
 NODE_ENV=development
+MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/<database>
 ```
 
 ### Variables disponibles
 
-| Variable | Descripción | Ejemplo |
-|----------|-------------|---------|
-| `PORT` | Puerto donde se ejecuta el servidor | `8080` |
-| `NODE_ENV` | Entorno de ejecución de la aplicación | `development` |
+| Variable      | Descripción                                                  | Ejemplo                                                                |
+| ------------- | ------------------------------------------------------------ | ---------------------------------------------------------------------- |
+| `PORT`        | Puerto donde se ejecuta el servidor                          | `8080`                                                                 |
+| `NODE_ENV`    | Entorno de ejecución de la aplicación                        | `development`                                                          |
+| `MONGODB_URI` | Cadena de conexión utilizada para conectarse a MongoDB Atlas | `mongodb+srv://<username>:<password>@<cluster>.mongodb.net/<database>` |
 
-> ⚠️ El archivo `.env` no debe subirse al repositorio. Utilizá `.env.example` como referencia para configurar las variables necesarias.
+> ⚠️ El archivo `.env` no debe subirse al repositorio. Utilizar `.env.example` como referencia para configurar las variables necesarias.
+
+## 🌐 Endpoints principales
+
+### Servicios
+
+| Método | Endpoint             | Descripción                 |
+| ------ | -------------------- | --------------------------- |
+| GET    | `/api/services`      | Obtener todos los servicios |
+| GET    | `/api/services/:sid` | Obtener un servicio por ID  |
+| POST   | `/api/services`      | Crear un nuevo servicio     |
+| PUT    | `/api/services/:sid` | Actualizar un servicio      |
+| DELETE | `/api/services/:sid` | Eliminar un servicio        |
+
+### Reservas
+
+| Método | Endpoint                           | Descripción                       |
+| ------ | ---------------------------------- | --------------------------------- |
+| GET    | `/api/bookings`                    | Obtener todas las reservas        |
+| GET    | `/api/bookings/:bid`               | Obtener una reserva por ID        |
+| POST   | `/api/bookings`                    | Crear una nueva reserva           |
+| POST   | `/api/bookings/:bid/services/:sid` | Agregar un servicio a una reserva |
+| PUT    | `/api/bookings/:bid`               | Actualizar una reserva            |
+| DELETE | `/api/bookings/:bid`               | Eliminar una reserva              |
+
+Antes de iniciar el servidor, asegurarse de haber configurado correctamente el archivo `.env` con la conexión a MongoDB Atlas.
 
 ## ▶️ Ejecución del proyecto
 
@@ -188,15 +222,15 @@ node --watch src/server.js
 
 ## 🛠️ Scripts disponibles
 
-| Comando | Descripción |
-|---------|-------------|
-| `npm run start` | Inicia el servidor |
-| `npm run dev` | Inicia el servidor en modo desarrollo con reinicio automático |
-| `npm run test` | Comando de pruebas actualmente no configurado |
+| Comando         | Descripción                                                   |
+| --------------- | ------------------------------------------------------------- |
+| `npm run start` | Inicia el servidor                                            |
+| `npm run dev`   | Inicia el servidor en modo desarrollo con reinicio automático |
+| `npm run test`  | Comando de pruebas actualmente no configurado                 |
 
 ## 🌐 Servidor local
 
-Una vez iniciado el proyecto, el servidor se ejecutará en el puerto configurado en el archivo `.env`.
+Una vez iniciado el proyecto y establecida correctamente la conexión con MongoDB Atlas, el servidor estará disponible en el puerto configurado en el archivo `.env`.
 
 Por defecto:
 
@@ -208,4 +242,4 @@ http://localhost:8080
 
 **Julian Jara Aguirre**
 
-Proyecto realizado con fines educativos como parte del curso **Back End 1**.
+Proyecto realizado con fines educativos como parte del curso **Back End I**.

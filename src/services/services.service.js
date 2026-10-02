@@ -1,4 +1,4 @@
-import { randomUUID } from "crypto"
+
 import * as repository from "../repositories/services.repository.js"
 
 export async function getServices(filters = {}) {
@@ -30,9 +30,7 @@ export async function getServiceById(id) {
 }
 
 export async function addService(data) {
-  // El cliente no elige el ID: lo genera el servidor.
-  const newData = { ...data, id: randomUUID() }
-  return repository.create(newData)
+  return repository.create(data)
 }
 
 export async function updateService(id, changes) {

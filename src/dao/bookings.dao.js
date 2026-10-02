@@ -1,127 +1,66 @@
-import fs from 'fs/promises';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import Booking from "../models/bookings.models.js"
 
-// 1. Configuración automática de la ruta absoluta de datos
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const FILE_PATH = path.join(__dirname, '../data/bookings.json');
-
-// Función interna o exportada para leer el archivo
+// GET: obtiene todas las reservas
 export async function getBookings() {
-  try {
-    const data = await fs.readFile(FILE_PATH, 'utf-8');
-    return JSON.parse(data);
-  } catch (error) {
-    // Si el archivo no existe (error ENOENT), devuelve un array vacío para no romper la app
-    if (error.code === 'ENOENT') return [];
-    throw error;
-  }
+    return await Booking.find()
 }
 
-// Busca una reserva por ID.
+// GET: obtiene una reserva por ID
 export async function getBookingById(id) {
-  const bookings = await getBookings();
-
-  return bookings.find(booking => booking.id === id) ?? null;
+    return await Booking.findById(id)
 }
 
-// Agrega una nueva reserva.
+// CREATE: crea una nueva reserva
 export async function addBooking(bookingData) {
-  const bookings = await getBookings();
-
-  // El servidor genera el ID.
-  const newBooking = {
-    id: bookingData.id,
-    clientName: bookingData.clientName,
-    clientEmail: bookingData.clientEmail,
-    date: bookingData.date,
-    time: bookingData.time,
-    status: bookingData.status,
-    services: []
-};
-
-  bookings.push(newBooking);
-
-  await fs.writeFile( FILE_PATH, JSON.stringify(bookings, null, 2));
-
-  return newBooking;
+    return await Booking.create(bookingData)
 }
 
-//add service exist
+// Agrega un servicio a una reserva
 export async function addServiceToBooking(bookingId, serviceId) {
 
-    const bookings = await getBookings();
-
-    // Buscamos la reserva
-    const booking = bookings.find(
-        booking => booking.id === bookingId
-    );
+    const booking = await Booking.findById(bookingId)
 
     if (!booking) {
-        return null;
+        return null
     }
 
-    // Buscamos si el servicio ya está agregado
     const existingService = booking.services.find(
-        item => item.service === serviceId
-    );
+        item => item.service.toString() === serviceId.toString()
+    )
 
     if (existingService) {
-        // Si ya existe, aumentamos la cantidad
-        existingService.quantity++;
+        existingService.quantity++
     } else {
-        // Si no existe, lo agregamos con cantidad 1
         booking.services.push({
             service: serviceId,
             quantity: 1
-        });
+        })
     }
 
-    await fs.writeFile(FILE_PATH, JSON.stringify(bookings, null, 2));
+    await booking.save()
 
-    return booking;
+    return booking
 }
 
-// Actualiza una reserva existente.
+// UPDATE: actualiza una reserva
 export async function updateBooking(id, changes) {
-  const bookings = await getBookings();
 
-  const bookingIndex = bookings.findIndex(
-    booking => booking.id === id
-  );
+    const { id: ignoredId, ...allowedChanges } = changes
 
-  if (bookingIndex === -1) {
-    return null;
-  }
-
-  // Si el cliente manda un id, lo descartamos.
-  const { id: ignoredId, ...allowedChanges } = changes;
-
-  bookings[bookingIndex] = {
-    ...bookings[bookingIndex],
-    ...allowedChanges
-  };
-
-  await fs.writeFile(FILE_PATH, JSON.stringify(bookings, null, 2));
-
-  return bookings[bookingIndex];
+    return await Booking.findByIdAndUpdate(
+        id,
+        allowedChanges,
+        {
+            new: true,
+            runValidators: true
+        }
+    )
 }
 
-// Elimina una reserva.
+// DELETE: elimina una reserva
 export async function deleteBooking(id) {
-  const bookings = await getBookings();
 
-  const filteredBookings = bookings.filter(
-    booking => booking.id !== id
-  );
+    const deletedBooking = await Booking.findByIdAndDelete(id)
 
-  if (filteredBookings.length === bookings.length) {
-    return false;
-  }
-
-  await fs.writeFile(FILE_PATH, JSON.stringify(filteredBookings, null, 2));
-
-  return true;
+    return deletedBooking !== null
 }

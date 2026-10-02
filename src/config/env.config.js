@@ -12,5 +12,6 @@ if (!process.env.NODE_ENV) {
 
 export const config = {
   port: process.env.PORT,
-  nodeEnv: process.env.NODE_ENV
+  nodeEnv: process.env.NODE_ENV,
+  mongoUri: process.env.MONGODB_URI
 };

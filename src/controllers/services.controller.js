@@ -64,6 +64,12 @@ export async function controllerCreateAddService(req, res) {
 
     const newService = await addService(req.body)
 
+    const io = req.app.get("io")
+
+    if (io) {
+        io.emit("serviceCreated", newService)
+    }
+
     res.status(201).json({
       status: "success",
       data: newService
@@ -88,6 +94,12 @@ export async function controllerUpdateService(req, res) {
             message: "Servicio no encontrado"
           })
         }
+
+        const io = req.app.get("io")
+
+        if (io) {
+            io.emit("serviceUpdated", updatedService)
+        }
     
         res.status(200).json({
           status: "success",
@@ -105,22 +117,31 @@ export async function controllerUpdateService(req, res) {
 
 export async function controllerDeleteService(req, res) {
     try {
-        const deleted = await deleteService(req.params.sid)
+        const serviceId = req.params.sid
+
+        const deleted = await deleteService(serviceId)
     
         if (!deleted) {
-          return res.status(404).json({
-            status: "error",
-            message: "Servicio no encontrado"
-          })
+            return res.status(404).json({
+                status: "error",
+                message: "Servicio no encontrado"
+            })
+        }
+
+        const io = req.app.get("io")
+
+        if (io) {
+            io.emit("serviceDeleted", serviceId)
         }
     
         res.status(204).send()
-      } catch (error) {
+
+    } catch (error) {
         console.error(error)
     
         res.status(500).json({
-          status: "error",
-          message: "No se pudo eliminar el servicio"
+            status: "error",
+            message: "No se pudo eliminar el servicio"
         })
-      }
+    }
 }

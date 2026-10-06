@@ -1,0 +1,64 @@
+<h1>{{title}}</h1>
+
+{{#if bookings.length}}
+
+    <div id="bookings-list">
+
+        {{#each bookings}}
+
+            <article data-booking-id="{{_id}}">
+
+    <h2>Reserva</h2>
+
+    <p>
+        <strong>Cliente:</strong>
+        {{clientName}}
+    </p>
+
+    <p>
+        <strong>Email:</strong>
+        {{clientEmail}}
+    </p>
+
+    <p>
+        <strong>Fecha:</strong>
+        {{date}}
+    </p>
+
+    <p>
+        <strong>Hora:</strong>
+        {{time}}
+    </p>
+
+    <p>
+        <strong>Estado:</strong>
+        {{status}}
+    </p>
+
+    <p>
+        <strong>Servicios:</strong>
+    </p>
+
+    <ul>
+        {{#each services}}
+            <li>
+                {{service.name}} × {{quantity}}
+            </li>
+        {{/each}}
+    </ul>
+
+    <hr>
+
+</article>
+
+        {{/each}}
+    </div>
+
+{{else}}
+
+    <p>No hay reservas registradas.</p>
+
+{{/if}}
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/socket.js"></script>

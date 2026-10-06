@@ -57,6 +57,12 @@ export async function controllerCreateAddBooking(req, res) {
 
         const newBooking = await addBooking(req.body)
 
+        const io = req.app.get("io")
+
+        if (io) {
+            io.emit("bookingCreated", newBooking)
+        }
+
         res.status(201).json({
             status: "success",
             data: newBooking
@@ -91,6 +97,12 @@ export async function controllerAddServiceToBooking(req, res) {
             })
         }
 
+        const io = req.app.get("io")
+
+        if (io) {
+            io.emit("bookingServiceAdded", result)
+        }
+
         res.status(200).json({
             status: "success",
             data: result
@@ -114,6 +126,12 @@ export async function controllerUpdateBooking(req, res) {
             return res.status(404).json({ status: "error", message: "Booking not found" })
         }
 
+        const io = req.app.get("io")
+
+        if (io) {
+            io.emit("bookingUpdated", updatedBooking)
+        }
+
         res.status(200).json({ status: "success", data: updatedBooking })
     } catch (error) {
         res.status(500).json({ status: "error", message: error.message })
@@ -130,6 +148,12 @@ export async function controllerDeleteBooking(req, res) {
                 status: "error",
                 message: "Booking not found"
             })
+        }
+
+        const io = req.app.get("io")
+
+        if (io) {
+            io.emit("bookingDeleted", bid)
         }
 
         res.status(204).send()

@@ -3,11 +3,15 @@ import Booking from "../models/bookings.models.js"
 // GET: obtiene todas las reservas
 export async function getBookings() {
     return await Booking.find()
+        .populate("services.service")
+        .lean()
 }
 
 // GET: obtiene una reserva por ID
 export async function getBookingById(id) {
     return await Booking.findById(id)
+        .populate("services.service")
+        .lean()
 }
 
 // CREATE: crea una nueva reserva
@@ -39,7 +43,9 @@ export async function addServiceToBooking(bookingId, serviceId) {
 
     await booking.save()
 
-    return booking
+    return await Booking.findById(bookingId)
+        .populate("services.service")
+        .lean()
 }
 
 // UPDATE: actualiza una reserva
@@ -55,6 +61,8 @@ export async function updateBooking(id, changes) {
             runValidators: true
         }
     )
+        .populate("services.service")
+        .lean()
 }
 
 // DELETE: elimina una reserva

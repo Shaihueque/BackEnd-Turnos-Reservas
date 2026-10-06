@@ -1,77 +1,84 @@
-# 🏨 Culmen Hotel & SPA
+# Culmen Hotel & SPA — Backend de Turnos y Reservas
 
-## 📋 Descripción
+Backend desarrollado con **Node.js, Express, MongoDB y Mongoose** para gestionar servicios y reservas de un establecimiento.
 
-**Culmen Hotel & SPA** es un proyecto desarrollado como parte del curso **Back End I**, cuyo objetivo principal es poner en práctica los conocimientos adquiridos durante la cursada.
-
-El proyecto consiste en desarrollar una API backend para la gestión de **turnos y reservas de servicios de un hotel SPA**.
-
-La aplicación permite gestionar los diferentes servicios ofrecidos por el hotel, así como también administrar las reservas realizadas por los clientes.
-
-La persistencia de los datos se realiza mediante **MongoDB Atlas**, utilizando **Mongoose** como herramienta de modelado y acceso a la base de datos.
-
-## 🎯 Objetivos del proyecto
-
-El objetivo principal es aplicar los conceptos y herramientas aprendidos durante el curso de **Back End I**, desarrollando una API que permita gestionar los recursos principales del sistema.
-
-Entre las funcionalidades principales se encuentran:
-
-* 📅 Crear y gestionar reservas.
-* 🏨 Asociar servicios a las reservas.
-* ➕ Crear nuevos servicios.
-* ✏️ Actualizar servicios existentes.
-* 🗑️ Eliminar servicios.
-* 🔎 Consultar los servicios disponibles.
-
-## 🛠️ Tecnologías utilizadas
-
-* Node.js
-* Express
-* JavaScript
-* MongoDB Atlas
-* Mongoose
-* dotenv
-* REST API
-
-## 📚 Conceptos aplicados
-
-Durante el desarrollo del proyecto se ponen en práctica diferentes conceptos relacionados con el desarrollo backend, entre ellos:
-
-* Arquitectura en capas.
-* Controllers.
-* Services.
-* DAOs / Repositories.
-* Modelos con Mongoose.
-* Persistencia de datos con MongoDB Atlas.
-* Relaciones entre documentos mediante ObjectId y referencias.
-* Rutas y endpoints.
-* Middleware.
-* Variables de entorno.
-* Manejo de errores.
-* Operaciones CRUD.
-* Arquitectura RESTful.
-
-## 🏨 Sobre Culmen Hotel & SPA
-
-**Culmen Hotel & SPA** busca representar un sistema de gestión para un hotel que ofrece diferentes servicios de bienestar y relajación.
-
-El sistema permite administrar los servicios disponibles y gestionar las reservas de los clientes de manera organizada.
+El proyecto implementa una arquitectura por capas y cuenta además con vistas dinámicas utilizando **Handlebars** y actualizaciones en tiempo real mediante **Socket.io**.
 
 ---
 
-## 📁 Estructura del proyecto
+## 📋 Descripción
+
+La aplicación permite:
+
+* Gestionar servicios.
+* Crear, consultar, actualizar y eliminar servicios.
+* Crear y consultar reservas.
+* Asociar servicios a una reserva.
+* Incrementar la cantidad de un mismo servicio dentro de una reserva.
+* Actualizar y eliminar reservas.
+* Consultar información mediante una API REST.
+* Visualizar servicios y reservas mediante vistas Handlebars.
+* Actualizar las vistas automáticamente utilizando Socket.io, sin necesidad de recargar la página.
+
+---
+
+## 🚀 Tecnologías utilizadas
+
+* Node.js
+* Express
+* MongoDB
+* Mongoose
+* Express Handlebars
+* Socket.io
+* JavaScript
+* dotenv
+* REST API
+* Arquitectura por capas
+
+---
+
+## 📚 Conceptos aplicados
+
+Durante el desarrollo se trabajaron los siguientes conceptos:
+
+* API REST
+* CRUD
+* Express Router
+* Controllers
+* Services
+* Repositories
+* DAO
+* Models con Mongoose
+* MongoDB
+* Relaciones mediante `ObjectId` y `populate`
+* Variables de entorno
+* Handlebars
+* Vistas dinámicas
+* Socket.io
+* Comunicación en tiempo real
+* Arquitectura por capas
+
+---
+
+# 📁 Estructura del proyecto
 
 ```text
 Back-End-Turno-Y-Reservas/
-├── node_modules/
+│
+├── public/
+│   └── js/
+│       └── socket.js
+│
 ├── src/
+│   │
 │   ├── config/
 │   │   ├── env.config.js
 │   │   └── database.config.js
 │   │
 │   ├── controllers/
 │   │   ├── bookings.controller.js
-│   │   └── services.controller.js
+│   │   ├── services.controller.js
+│   │   └── views.controller.js
 │   │
 │   ├── dao/
 │   │   ├── bookings.dao.js
@@ -82,9 +89,9 @@ Back-End-Turno-Y-Reservas/
 │   ├── middlewares/
 │   │
 │   ├── models/
-│   │   ├── bookings.model.js
-│   │   ├── messages.model.js
-│   │   └── services.model.js
+│   │   ├── services.models.js
+│   │   ├── bookings.models.js
+│   │   └── messages.models.js
 │   │
 │   ├── repositories/
 │   │   ├── bookings.repository.js
@@ -92,7 +99,8 @@ Back-End-Turno-Y-Reservas/
 │   │
 │   ├── routes/
 │   │   ├── bookings.router.js
-│   │   └── services.router.js
+│   │   ├── services.router.js
+│   │   └── views.router.js
 │   │
 │   ├── services/
 │   │   ├── bookings.service.js
@@ -100,54 +108,102 @@ Back-End-Turno-Y-Reservas/
 │   │
 │   ├── utils/
 │   │
+│   ├── views/
+│   │   ├── layouts/
+│   │   │   └── main.handlebars
+│   │   ├── services.handlebars
+│   │   └── availability.handlebars
+│   │
 │   ├── app.js
 │   └── server.js
 │
 ├── .env
 ├── .env.example
 ├── .gitignore
-├── package-lock.json
 ├── package.json
+├── package-lock.json
 └── README.md
 ```
 
-## ⚙️ Instalación
+---
 
-Para ejecutar el proyecto localmente, seguir los siguientes pasos.
+# 🏗️ Arquitectura
 
-### 1. Clonar el repositorio
+El proyecto utiliza una arquitectura por capas:
 
-```bash
-git clone https://github.com/Shaihueque/BackEnd-Turnos-Reservas.git
+```text
+Routes
+   ↓
+Controllers
+   ↓
+Services
+   ↓
+Repositories
+   ↓
+DAO
+   ↓
+Models
+   ↓
+MongoDB
 ```
 
-### 2. Ingresar al directorio del proyecto
+Cada capa tiene una responsabilidad determinada.
+
+### Routes
+
+Define los endpoints disponibles y recibe las solicitudes HTTP.
+
+### Controllers
+
+Recibe las solicitudes de las rutas, valida los datos y devuelve las respuestas.
+
+También se encarga de emitir eventos mediante Socket.io cuando corresponde.
+
+### Services
+
+Contiene la lógica de negocio de la aplicación.
+
+### Repositories
+
+Actúa como intermediario entre la capa de servicios y el DAO.
+
+### DAO
+
+Se encarga de interactuar directamente con los modelos de Mongoose.
+
+### Models
+
+Definen los esquemas utilizados para almacenar información en MongoDB.
+
+---
+
+# ⚙️ Instalación
+
+Clonar el repositorio:
 
 ```bash
-cd BackEnd-Turnos-Reservas
+git clone <URL_DEL_REPOSITORIO>
 ```
 
-### 3. Instalar las dependencias
+Ingresar al proyecto:
 
-Ejecutar el siguiente comando para instalar las dependencias necesarias:
+```bash
+cd Back-End-Turno-Y-Reservas
+```
+
+Instalar las dependencias:
 
 ```bash
 npm install
 ```
 
-### 4. Configurar las variables de entorno
+---
 
-Crear un archivo `.env` en la raíz del proyecto utilizando `.env.example` como referencia.
+# 🔐 Variables de entorno
 
-Completar las variables necesarias para la configuración del servidor y la conexión con MongoDB Atlas.
+Crear un archivo `.env` en la raíz del proyecto.
 
-> ⚠️ No subir el archivo `.env` al repositorio, ya que puede contener información sensible.
-
-## 🔐 Variables de entorno
-
-El proyecto utiliza variables de entorno para configurar el puerto del servidor, el modo de ejecución y la conexión con MongoDB Atlas.
-
-En la raíz del proyecto, crear un archivo llamado `.env`:
+Ejemplo:
 
 ```env
 PORT=8080
@@ -155,91 +211,685 @@ NODE_ENV=development
 MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/<database>
 ```
 
-### Variables disponibles
+También se incluye un archivo:
 
-| Variable      | Descripción                                                  | Ejemplo                                                                |
-| ------------- | ------------------------------------------------------------ | ---------------------------------------------------------------------- |
-| `PORT`        | Puerto donde se ejecuta el servidor                          | `8080`                                                                 |
-| `NODE_ENV`    | Entorno de ejecución de la aplicación                        | `development`                                                          |
-| `MONGODB_URI` | Cadena de conexión utilizada para conectarse a MongoDB Atlas | `mongodb+srv://<username>:<password>@<cluster>.mongodb.net/<database>` |
+```text
+.env.example
+```
 
-> ⚠️ El archivo `.env` no debe subirse al repositorio. Utilizar `.env.example` como referencia para configurar las variables necesarias.
+para mostrar las variables necesarias sin exponer información sensible.
 
-## 🌐 Endpoints principales
+> El archivo `.env` no debe subirse al repositorio.
 
-### Servicios
+---
 
-| Método | Endpoint             | Descripción                 |
-| ------ | -------------------- | --------------------------- |
-| GET    | `/api/services`      | Obtener todos los servicios |
-| GET    | `/api/services/:sid` | Obtener un servicio por ID  |
-| POST   | `/api/services`      | Crear un nuevo servicio     |
-| PUT    | `/api/services/:sid` | Actualizar un servicio      |
-| DELETE | `/api/services/:sid` | Eliminar un servicio        |
-
-### Reservas
-
-| Método | Endpoint                           | Descripción                       |
-| ------ | ---------------------------------- | --------------------------------- |
-| GET    | `/api/bookings`                    | Obtener todas las reservas        |
-| GET    | `/api/bookings/:bid`               | Obtener una reserva por ID        |
-| POST   | `/api/bookings`                    | Crear una nueva reserva           |
-| POST   | `/api/bookings/:bid/services/:sid` | Agregar un servicio a una reserva |
-| PUT    | `/api/bookings/:bid`               | Actualizar una reserva            |
-| DELETE | `/api/bookings/:bid`               | Eliminar una reserva              |
-
-Antes de iniciar el servidor, asegurarse de haber configurado correctamente el archivo `.env` con la conexión a MongoDB Atlas.
-
-## ▶️ Ejecución del proyecto
-
-### Modo producción / normal
+# ▶️ Ejecutar el proyecto
 
 Para iniciar el servidor:
 
 ```bash
-npm run start
+npm start
 ```
 
-Este comando ejecuta:
-
-```bash
-node src/server.js
-```
-
-### Modo desarrollo
-
-Para ejecutar el proyecto en modo desarrollo, utilizando el reinicio automático de Node.js:
+Para ejecutar el proyecto en modo desarrollo:
 
 ```bash
 npm run dev
 ```
 
-Este comando ejecuta:
-
-```bash
-node --watch src/server.js
-```
-
-## 🛠️ Scripts disponibles
-
-| Comando         | Descripción                                                   |
-| --------------- | ------------------------------------------------------------- |
-| `npm run start` | Inicia el servidor                                            |
-| `npm run dev`   | Inicia el servidor en modo desarrollo con reinicio automático |
-| `npm run test`  | Comando de pruebas actualmente no configurado                 |
-
-## 🌐 Servidor local
-
-Una vez iniciado el proyecto y establecida correctamente la conexión con MongoDB Atlas, el servidor estará disponible en el puerto configurado en el archivo `.env`.
-
-Por defecto:
+El servidor quedará disponible en:
 
 ```text
 http://localhost:8080
 ```
 
-## 👨‍💻 Autor
+---
+
+# 🌐 API REST
+
+## Servicios
+
+### Obtener todos los servicios
+
+```http
+GET /api/services
+```
+
+También permite utilizar filtros mediante query parameters:
+
+```http
+GET /api/services?category=salud
+```
+
+```http
+GET /api/services?available=true
+```
+
+---
+
+### Obtener un servicio
+
+```http
+GET /api/services/:sid
+```
+
+Ejemplo:
+
+```http
+GET /api/services/6ac50dca9fc85721a2c03faf
+```
+
+---
+
+### Crear un servicio
+
+```http
+POST /api/services
+```
+
+Ejemplo de body:
+
+```json
+{
+    "name": "Gimnasio",
+    "description": "Entrenamiento personalizado",
+    "duration": 60,
+    "price": 10000,
+    "category": "salud",
+    "available": true
+}
+```
+
+---
+
+### Actualizar un servicio
+
+```http
+PUT /api/services/:sid
+```
+
+Ejemplo:
+
+```json
+{
+    "name": "Gimnasio actualizado",
+    "price": 12000,
+    "available": false
+}
+```
+
+---
+
+### Eliminar un servicio
+
+```http
+DELETE /api/services/:sid
+```
+
+---
+
+# 📅 Reservas
+
+### Crear una reserva
+
+```http
+POST /api/bookings
+```
+
+Ejemplo:
+
+```json
+{
+    "clientName": "Juan Perez",
+    "clientEmail": "juan@email.com",
+    "date": "2026-09-25",
+    "time": "18:00",
+    "status": "pending",
+    "services": []
+}
+```
+
+---
+
+### Obtener una reserva
+
+```http
+GET /api/bookings/:bid
+```
+
+---
+
+### Actualizar una reserva
+
+```http
+PUT /api/bookings/:bid
+```
+
+---
+
+### Eliminar una reserva
+
+```http
+DELETE /api/bookings/:bid
+```
+
+---
+
+### Agregar un servicio a una reserva
+
+```http
+POST /api/bookings/:bid/services/:sid
+```
+
+La aplicación verifica que tanto la reserva como el servicio existan.
+
+Si el servicio ya está asociado a la reserva, se incrementa su cantidad.
+
+Ejemplo:
+
+```json
+{
+    "service": "6ac50dca9fc85721a2c03faf",
+    "quantity": 3
+}
+```
+
+---
+
+# 🖥️ Vistas con Handlebars
+
+El proyecto utiliza **Express Handlebars** como motor de vistas.
+
+La configuración se encuentra en:
+
+```text
+src/app.js
+```
+
+Las vistas se encuentran en:
+
+```text
+src/views/
+```
+
+---
+
+## 📋 Vista de servicios
+
+Para acceder:
+
+```text
+GET /views/services
+```
+
+URL:
+
+```text
+http://localhost:8080/views/services
+```
+
+La vista obtiene los servicios directamente desde MongoDB utilizando la arquitectura del proyecto:
+
+```text
+Controller
+    ↓
+Service
+    ↓
+Repository
+    ↓
+DAO
+    ↓
+Model
+    ↓
+MongoDB
+```
+
+La información mostrada incluye:
+
+* Nombre
+* Descripción
+* Duración
+* Precio
+* Categoría
+* Disponibilidad
+
+No existen datos de servicios hardcodeados dentro del archivo `.handlebars`.
+
+---
+
+## 🔎 Vista individual de servicio
+
+Para consultar un servicio específico:
+
+```text
+GET /views/services/:sid
+```
+
+Ejemplo:
+
+```text
+http://localhost:8080/views/services/ID_DEL_SERVICIO
+```
+
+---
+
+# 📅 Vista de disponibilidad
+
+Para consultar las reservas:
+
+```text
+GET /views/availability
+```
+
+URL:
+
+```text
+http://localhost:8080/views/availability
+```
+
+La vista obtiene las reservas reales desde MongoDB.
+
+Muestra información como:
+
+* Cliente
+* Email
+* Fecha
+* Hora
+* Estado
+* Servicios asociados
+* Cantidad de cada servicio
+
+Los servicios asociados a una reserva se obtienen mediante `populate()` de Mongoose.
+
+---
+
+## 🔎 Vista individual de reserva
+
+También es posible consultar una reserva específica:
+
+```text
+GET /views/availability/:bid
+```
+
+Ejemplo:
+
+```text
+http://localhost:8080/views/availability/ID_DE_LA_RESERVA
+```
+
+---
+
+# ⚡ Socket.io
+
+El proyecto utiliza **Socket.io** para realizar actualizaciones en tiempo real.
+
+El servidor Socket.io se configura en:
+
+```text
+src/server.js
+```
+
+El cliente se encuentra en:
+
+```text
+public/js/socket.js
+```
+
+La conexión se realiza mediante:
+
+```js
+const socket = io()
+```
+
+Cuando el navegador establece la conexión, se muestra:
+
+```text
+Conectado a Socket.io
+```
+
+en la consola del navegador.
+
+---
+
+# 🔄 Eventos en tiempo real
+
+Actualmente se utilizan los siguientes eventos:
+
+### Servicios
+
+```text
+serviceCreated
+serviceUpdated
+serviceDeleted
+```
+
+### Reservas
+
+```text
+bookingCreated
+bookingUpdated
+bookingDeleted
+bookingServiceAdded
+```
+
+---
+
+# 🔄 Actualización dinámica
+
+Las vistas se actualizan automáticamente cuando ocurre una operación mediante la API.
+
+No es necesario realizar `F5`.
+
+Por ejemplo:
+
+```text
+POST /api/services
+```
+
+crea un nuevo servicio.
+
+El controller emite:
+
+```js
+io.emit("serviceCreated", newService)
+```
+
+El navegador recibe el evento:
+
+```js
+socket.on("serviceCreated", (service) => {
+    // Actualiza la vista
+})
+```
+
+El nuevo servicio aparece automáticamente en:
+
+```text
+/views/services
+```
+
+---
+
+# ✏️ Actualización de servicios en tiempo real
+
+Cuando se ejecuta:
+
+```http
+PUT /api/services/:sid
+```
+
+el servidor emite:
+
+```text
+serviceUpdated
+```
+
+La vista modifica automáticamente el servicio correspondiente.
+
+---
+
+# 🗑️ Eliminación de servicios en tiempo real
+
+Cuando se ejecuta:
+
+```http
+DELETE /api/services/:sid
+```
+
+el servidor emite:
+
+```text
+serviceDeleted
+```
+
+El servicio desaparece automáticamente de la vista.
+
+---
+
+# 📅 Reservas en tiempo real
+
+Cuando se crea una reserva:
+
+```text
+bookingCreated
+```
+
+Cuando se actualiza:
+
+```text
+bookingUpdated
+```
+
+Cuando se elimina:
+
+```text
+bookingDeleted
+```
+
+Cuando se agrega un servicio:
+
+```text
+bookingServiceAdded
+```
+
+Las modificaciones se reflejan automáticamente en el navegador.
+
+---
+
+# 🧪 Verificación de Socket.io
+
+Para comprobar el funcionamiento:
+
+## 1. Abrir la vista
+
+```text
+http://localhost:8080/views/services
+```
+
+En otra pestaña o herramienta como Postman/Thunder Client ejecutar:
+
+```http
+POST /api/services
+```
+
+El nuevo servicio debe aparecer automáticamente en la vista.
+
+---
+
+## 2. Actualizar un servicio
+
+Ejecutar:
+
+```http
+PUT /api/services/:sid
+```
+
+Modificar algún dato, por ejemplo:
+
+```json
+{
+    "price": 15000
+}
+```
+
+La vista debe actualizar el precio automáticamente.
+
+No realizar `F5`.
+
+---
+
+## 3. Eliminar un servicio
+
+Ejecutar:
+
+```http
+DELETE /api/services/:sid
+```
+
+El servicio debe desaparecer automáticamente de la vista.
+
+---
+
+## 4. Crear una reserva
+
+Abrir:
+
+```text
+http://localhost:8080/views/availability
+```
+
+Crear una reserva utilizando:
+
+```http
+POST /api/bookings
+```
+
+La nueva reserva debe aparecer automáticamente.
+
+---
+
+## 5. Actualizar una reserva
+
+Ejecutar:
+
+```http
+PUT /api/bookings/:bid
+```
+
+Por ejemplo:
+
+```json
+{
+    "status": "confirmed"
+}
+```
+
+El estado debe actualizarse automáticamente en el navegador.
+
+---
+
+## 6. Agregar un servicio
+
+Ejecutar:
+
+```http
+POST /api/bookings/:bid/services/:sid
+```
+
+El servicio debe aparecer dentro de la reserva sin necesidad de recargar la página.
+
+Si se vuelve a agregar el mismo servicio, la cantidad debe incrementarse.
+
+Por ejemplo:
+
+```text
+Gimnasio × 1
+```
+
+Luego:
+
+```text
+Gimnasio × 2
+```
+
+Y nuevamente:
+
+```text
+Gimnasio × 3
+```
+
+---
+
+# 🧩 Persistencia
+
+La información se almacena en **MongoDB** mediante Mongoose.
+
+Los servicios utilizan el modelo:
+
+```text
+Service
+```
+
+Las reservas utilizan:
+
+```text
+Booking
+```
+
+Las relaciones entre reservas y servicios se realizan mediante:
+
+```js
+ObjectId
+```
+
+y:
+
+```js
+ref: "Service"
+```
+
+Para obtener los datos completos del servicio asociado se utiliza:
+
+```js
+.populate("services.service")
+```
+
+---
+
+# 🔒 Seguridad
+
+Las credenciales de MongoDB se almacenan mediante variables de entorno.
+
+El archivo:
+
+```text
+.env
+```
+
+se encuentra incluido en:
+
+```text
+.gitignore
+```
+
+No se deben subir credenciales reales al repositorio.
+
+El archivo:
+
+```text
+.env.example
+```
+
+contiene únicamente la estructura necesaria para configurar el proyecto.
+
+---
+
+# 📦 Scripts disponibles
+
+### Iniciar aplicación
+
+```bash
+npm start
+```
+
+### Modo desarrollo
+
+```bash
+npm run dev
+```
+
+### Tests
+
+```bash
+npm test
+```
+
+Actualmente no se encuentran configurados tests automatizados.
+
+---
+
+# 👨‍💻 Autor
 
 **Julian Jara Aguirre**
 
-Proyecto realizado con fines educativos como parte del curso **Back End I**.
+---

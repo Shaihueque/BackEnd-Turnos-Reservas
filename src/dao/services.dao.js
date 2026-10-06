@@ -2,12 +2,12 @@ import Service from "../models/services.models.js"
 
 // GET: obtiene todos los servicios
 export async function getServices() {
-    return await Service.find()
+    return await Service.find().lean()
 }
 
 // GET: obtiene un servicio por ID
 export async function getServiceById(id) {
-    return await Service.findById(id)
+    return await Service.findById(id).lean()
 }
 
 // CREATE: crea un nuevo servicio

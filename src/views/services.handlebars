@@ -1,0 +1,55 @@
+<h1>{{title}}</h1>
+
+{{#if services.length}}
+
+<div id="services-list">
+
+    {{#each services}}
+
+        <article data-service-id="{{_id}}">
+            <h2>{{name}}</h2>
+
+            <p>{{description}}</p>
+
+            <p>
+                <strong>Duración:</strong>
+                {{duration}} minutos
+            </p>
+
+            <p>
+                <strong>Precio:</strong>
+                ${{price}}
+            </p>
+
+            <p>
+                <strong>Categoría:</strong>
+                {{category}}
+            </p>
+
+            <p>
+                <strong>Disponibilidad:</strong>
+
+                {{#if available}}
+                    Disponible
+                {{else}}
+                    No disponible
+                {{/if}}
+            </p>
+
+            <hr>
+
+        </article>
+
+    {{/each}}
+
+</div>
+
+{{else}}
+
+<p>No hay servicios registrados.</p>
+
+{{/if}}
+
+<script src="/socket.io/socket.io.js"></script>
+
+<script src="/js/socket.js"></script>

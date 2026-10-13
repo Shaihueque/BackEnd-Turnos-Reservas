@@ -57,9 +57,9 @@ export async function updateBooking(id, changes) {
         id,
         allowedChanges,
         {
-            new: true,
+            returnDocument: "after",
             runValidators: true
-        }
+    }
     )
         .populate("services.service")
         .lean()

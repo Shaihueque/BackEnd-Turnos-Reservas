@@ -518,9 +518,9 @@ El proyecto utiliza **Zod** para validar los datos recibidos por determinados en
 Los esquemas se encuentran en:
 
 ```text
-src/validators/
-├── services.validators.js
-└── bookings.validators.js
+src/validations/
+├── services.validation.js
+└── bookings.validation.js
 ```
 
 El middleware de validación se encuentra en:

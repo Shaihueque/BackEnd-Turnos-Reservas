@@ -25,3 +25,10 @@ export const updateServiceSchema = createServiceSchema
             message: "Debés enviar al menos un campo para actualizar"
         }
     );
+
+    export const serviceIdParamsSchema = z.object({
+    sid: z.string().regex(
+        /^[0-9a-fA-F]{24}$/,
+        "El ID del servicio no es válido"
+    )
+});

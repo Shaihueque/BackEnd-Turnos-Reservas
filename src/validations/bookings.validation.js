@@ -47,3 +47,34 @@ export const addServiceToBookingParamsSchema = z.object({
         "El ID del servicio no es válido"
     )
 });
+
+export const updateBookingSchema = createBookingSchema
+    .omit({
+        status: true,
+        services: true
+    })
+    .partial()
+    .extend({
+        status: z.enum(["pending", "confirmed", "cancelled"]).optional(),
+        services: z.array(
+            z.object({
+                service: z.string().regex(
+                    /^[0-9a-fA-F]{24}$/,
+                    "El ID del servicio no es válido"
+                ),
+                quantity: z.number()
+                    .int("La cantidad debe ser un número entero")
+                    .positive("La cantidad debe ser mayor que cero")
+            })
+        ).optional()
+    })
+    .refine(data => Object.keys(data).length > 0, {
+        message: "Debés enviar al menos un campo para actualizar"
+    });
+
+    export const bookingIdParamsSchema = z.object({
+    bid: z.string().regex(
+        /^[0-9a-fA-F]{24}$/,
+        "El ID de la reserva no es válido"
+    )
+});

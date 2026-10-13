@@ -1,8 +1,62 @@
 import Service from "../models/services.models.js"
 
-// GET: obtiene todos los servicios
-export async function getServices() {
-    return await Service.find().lean()
+// Obtiene servicios con filtros, paginación y ordenamiento
+export async function getServices(filters = {}) {
+    const {category, available, page = 1, limit = 10, sortBy, order = "asc"} = filters;
+
+    const query = {};
+
+    if (category) {
+        query.category = category;
+    }
+
+    if (available !== undefined) {
+        query.available = available === true || available === "true";
+    }
+
+    const allowedSortFields = [
+        "name",
+        "duration",
+        "price",
+        "category",
+        "available"
+    ];
+
+    const sortOptions = {};
+
+    if (allowedSortFields.includes(sortBy)) {
+        sortOptions[sortBy] = order === "desc" ? -1 : 1;
+    }
+
+    const skip = (page - 1) * limit;
+
+    let servicesQuery = Service.find(query);
+
+    if (Object.keys(sortOptions).length > 0) {
+        servicesQuery = servicesQuery.sort(sortOptions);
+    }
+
+    return await servicesQuery
+        .skip(skip)
+        .limit(limit)
+        .lean();
+}
+
+// Cuenta los servicios que coinciden con los filtros
+export async function countServices(filters = {}) {
+    const { category, available } = filters;
+
+    const query = {};
+
+    if (category) {
+        query.category = category;
+    }
+
+    if (available !== undefined) {
+        query.available = available === true || available === "true";
+    }
+
+    return await Service.countDocuments(query);
 }
 
 // GET: obtiene un servicio por ID

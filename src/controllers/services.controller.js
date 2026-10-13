@@ -1,29 +1,25 @@
 import {getServices, getServiceById, addService, updateService, deleteService} from "../services/services.service.js"
 
 export async function controllerGetAllServices(req, res) {
-
     try {
-    const { category, available } = req.query
+        const {category, available, page, limit, sortBy, order} = req.query;
 
-    const services = await getServices({
-      category,
-      available
-    })
+        const result = await getServices({category, available, page, limit, sortBy, order});
 
-    res.status(200).json({
-      status: "success",
-      data: services
-    })
+        res.status(200).json({
+            status: "success",
+            data: result.services,
+            pagination: result.pagination
+        });
 
-  } catch (error) {
-    console.error(error)
+    } catch (error) {
+        console.error(error);
 
-    res.status(500).json({
-      status: "error",
-      message: "No se pudieron obtener los servicios"
-    })
-  }
-    
+        res.status(500).json({
+            status: "error",
+            message: "No se pudieron obtener los servicios"
+        });
+    }
 }
 
 export async function controllerGetServiceById(req, res) {

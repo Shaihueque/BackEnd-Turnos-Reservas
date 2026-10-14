@@ -49,15 +49,6 @@ export async function controllerGetServiceById(req, res) {
 
 export async function controllerCreateAddService(req, res) {
    try {
-    const { name,description , duration, price, category, available } = req.body
-
-    if ( !name || !description || duration === undefined || price === undefined || !category || available === undefined) {
-      return res.status(400).json({
-        status: "error",
-        message: "Todos los campos son obligatorios"
-      })
-    }
-
     const newService = await addService(req.body)
 
     const io = req.app.get("io")

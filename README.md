@@ -68,7 +68,7 @@ La aplicación permite:
 
 ---
 
-# 📁 Estructura del proyecto
+## 📁 Estructura del proyecto
 
 ```text
 Back-End-Turno-Y-Reservas/
@@ -117,7 +117,7 @@ Back-End-Turno-Y-Reservas/
 │   ├── utils/
 │   │
 │   ├── validations/
-│   │   ├── services.validation.js
+│   │   ├── service.validation.js
 │   │   └── bookings.validation.js
 │   │
 │   ├── views/
@@ -139,7 +139,7 @@ Back-End-Turno-Y-Reservas/
 
 ---
 
-# 🏗️ Arquitectura
+## 🏗️ Arquitectura
 
 El proyecto utiliza una arquitectura por capas:
 
@@ -195,7 +195,7 @@ Definen los esquemas utilizados para almacenar información en MongoDB.
 
 ---
 
-# ⚙️ Instalación
+## ⚙️ Instalación
 
 Clonar el repositorio:
 
@@ -217,7 +217,7 @@ npm install
 
 ---
 
-# 🔐 Variables de entorno
+## 🔐 Variables de entorno
 
 Crear un archivo `.env` en la raíz del proyecto.
 
@@ -235,8 +235,7 @@ También se incluye un archivo `.env.example` para mostrar las variables necesar
 
 ---
 
-
-# ▶️ Ejecutar el proyecto
+## ▶️ Ejecutar el proyecto
 
 Para iniciar el servidor:
 
@@ -252,14 +251,11 @@ npm run dev
 
 El servidor quedará disponible en:
 
-```text
-http://localhost:8080
-```
+[http://localhost:8080](http://localhost:8080)
 
 ---
 
-
-# 🌐 API REST
+## 🌐 API REST
 
 La API permite administrar servicios y reservas mediante solicitudes HTTP.
 
@@ -290,31 +286,31 @@ El endpoint admite los siguientes parámetros:
 
 Ejemplos:
 
-Filtrar por categoría:
+**Filtrar por categoría:**
 
 ```http
 GET /api/services?category=salud
 ```
 
-Filtrar por disponibilidad:
+**Filtrar por disponibilidad:**
 
 ```http
 GET /api/services?available=true
 ```
 
-Obtener la primera página con cinco resultados:
+**Obtener la primera página con cinco resultados:**
 
 ```http
 GET /api/services?page=1&limit=5
 ```
 
-Ordenar por precio de mayor a menor:
+**Ordenar por precio de mayor a menor:**
 
 ```http
 GET /api/services?sortBy=price&order=desc
 ```
 
-Combinar filtros, paginación y ordenamiento:
+**Combinar filtros, paginación y ordenamiento:**
 
 ```http
 GET /api/services?category=salud&available=false&page=1&limit=5&sortBy=price&order=desc
@@ -511,7 +507,7 @@ La respuesta de la API puede mostrar el servicio poblado con sus datos completos
 
 ---
 
-# ✅ Validación de datos con Zod
+## ✅ Validación de datos con Zod
 
 El proyecto utiliza **Zod** para validar los datos recibidos por determinados endpoints antes de ejecutar las operaciones de negocio.
 
@@ -519,7 +515,7 @@ Los esquemas se encuentran en:
 
 ```text
 src/validations/
-├── services.validation.js
+├── service.validation.js
 └── bookings.validation.js
 ```
 
@@ -589,7 +585,7 @@ Los mensajes concretos dependen del esquema y del campo que no supere la validac
 
 ---
 
-# 🔗 Relación entre reservas y servicios
+## 🔗 Relación entre reservas y servicios
 
 Las reservas almacenan referencias a los servicios mediante ObjectId de MongoDB.
 
@@ -656,7 +652,7 @@ Ejemplo ilustrativo de respuesta:
 
 ---
 
-# 🖥️ Vistas con Handlebars
+## 🖥️ Vistas con Handlebars
 
 El proyecto utiliza **Express Handlebars** como motor de vistas.
 
@@ -672,7 +668,7 @@ Las vistas se encuentran en:
 src/views/
 ```
 
-## Vista de servicios
+### Vista de servicios
 
 Ruta:
 
@@ -682,9 +678,7 @@ GET /views/services
 
 URL:
 
-```text
-http://localhost:8080/views/services
-```
+[http://localhost:8080/views/services](http://localhost:8080/views/services)
 
 La vista obtiene los servicios desde MongoDB utilizando la arquitectura del proyecto.
 
@@ -698,78 +692,6 @@ La información mostrada incluye:
 - Disponibilidad.
 
 Los datos se obtienen de la base de datos y no se encuentran hardcodeados en el archivo Handlebars.
-
-## Vista individual de servicio
-
-Ruta:
-
-```http
-GET /views/services/:sid
-```
-
-Ejemplo:
-
-```text
-http://localhost:8080/views/services/ID_DEL_SERVICIO
-```
-
-## Vista de disponibilidad
-
-Ruta:
-
-```http
-GET /views/availability
-```
-
-URL:
-
-```text
-http://localhost:8080/views/availability
-```
-
-La vista obtiene las reservas reales desde MongoDB.
-
-Muestra información como:
-
-- Cliente.
-- Email.
-- Fecha.
-- Hora.
-- Estado.
-- Servicios asociados.
-- Cantidad de cada servicio.
-
-Los servicios asociados a una reserva se obtienen mediante `populate()` de Mongoose.
-
-## Vista individual de reserva
-
-Ruta:
-
-```http
-GET /views/availability/:bid
-```
-
-Ejemplo:
-
-```text
-http://localhost:8080/views/availability/ID_DE_LA_RESERVA
-```
-
----
-
-## 📋 Vista de servicios
-
-Para acceder:
-
-```text
-GET /views/services
-```
-
-URL:
-
-```text
-http://localhost:8080/views/services
-```
 
 La vista obtiene los servicios directamente desde MongoDB utilizando la arquitectura del proyecto:
 
@@ -787,82 +709,61 @@ Model
 MongoDB
 ```
 
-La información mostrada incluye:
-
-* Nombre
-* Descripción
-* Duración
-* Precio
-* Categoría
-* Disponibilidad
-
 No existen datos de servicios hardcodeados dentro del archivo `.handlebars`.
 
----
+### Vista individual de servicio
 
-## 🔎 Vista individual de servicio
+Ruta:
 
-Para consultar un servicio específico:
-
-```text
+```http
 GET /views/services/:sid
 ```
 
 Ejemplo:
 
-```text
-http://localhost:8080/views/services/ID_DEL_SERVICIO
-```
+[http://localhost:8080/views/services/ID_DEL_SERVICIO](http://localhost:8080/views/services/ID_DEL_SERVICIO)
 
----
+### Vista de disponibilidad
 
-# 📅 Vista de disponibilidad
+Ruta:
 
-Para consultar las reservas:
-
-```text
+```http
 GET /views/availability
 ```
 
 URL:
 
-```text
-http://localhost:8080/views/availability
-```
+[http://localhost:8080/views/availability](http://localhost:8080/views/availability)
 
 La vista obtiene las reservas reales desde MongoDB.
 
 Muestra información como:
 
-* Cliente
-* Email
-* Fecha
-* Hora
-* Estado
-* Servicios asociados
-* Cantidad de cada servicio
+- Cliente.
+- Email.
+- Fecha.
+- Hora.
+- Estado.
+- Servicios asociados.
+- Cantidad de cada servicio.
 
 Los servicios asociados a una reserva se obtienen mediante `populate()` de Mongoose.
 
----
+### Vista individual de reserva
 
-## 🔎 Vista individual de reserva
+Ruta:
 
-También es posible consultar una reserva específica:
-
-```text
+```http
 GET /views/availability/:bid
 ```
 
 Ejemplo:
 
-```text
-http://localhost:8080/views/availability/ID_DE_LA_RESERVA
-```
+[http://localhost:8080/views/availability/ID_DE_LA_RESERVA](http://localhost:8080/views/availability/ID_DE_LA_RESERVA)
 
 ---
 
-# ⚡ Socket.io
+## ⚡ Socket.io
 
 El proyecto utiliza **Socket.io** para realizar actualizaciones en tiempo real.
 
@@ -888,7 +789,7 @@ Cuando el navegador establece la conexión, se muestra el mensaje correspondient
 
 ---
 
-# 🔄 Eventos en tiempo real
+## 🔄 Eventos en tiempo real
 
 Los eventos utilizados por la aplicación incluyen:
 
@@ -913,7 +814,7 @@ Las vistas reciben estos eventos para reflejar los cambios realizados mediante l
 
 ---
 
-# 🔄 Actualización dinámica
+## 🔄 Actualización dinámica
 
 Por ejemplo, al crear un servicio mediante:
 
@@ -939,7 +840,7 @@ El mismo principio se aplica a la actualización y eliminación de servicios, as
 
 ---
 
-# ✏️ Actualización de servicios en tiempo real
+## ✏️ Actualización de servicios en tiempo real
 
 Cuando se ejecuta:
 
@@ -957,7 +858,7 @@ La vista modifica automáticamente el servicio correspondiente.
 
 ---
 
-# 🗑️ Eliminación de servicios en tiempo real
+## 🗑️ Eliminación de servicios en tiempo real
 
 Cuando se ejecuta:
 
@@ -975,7 +876,7 @@ El servicio desaparece automáticamente de la vista.
 
 ---
 
-# 📅 Reservas en tiempo real
+## 📅 Reservas en tiempo real
 
 Cuando se crea una reserva:
 
@@ -1005,24 +906,24 @@ Las modificaciones se reflejan automáticamente en el navegador.
 
 ---
 
-# 🧪 Verificación de Socket.io
+## 🧪 Verificación de Socket.io
 
 Para comprobar el funcionamiento:
 
-1. Abrir la vista de servicios en `http://localhost:8080/views/services`.
+1. Abrir la vista de servicios en [http://localhost:8080/views/services](http://localhost:8080/views/services).
 2. Crear un servicio mediante `POST /api/services`.
 3. Comprobar que el nuevo servicio aparece en la vista sin recargar la página.
 4. Actualizar un servicio mediante `PUT /api/services/:sid`.
 5. Verificar que los cambios se reflejen automáticamente.
 6. Eliminar un servicio mediante `DELETE /api/services/:sid`.
 7. Comprobar que desaparezca de la vista.
-8. Repetir el procedimiento con las reservas en `http://localhost:8080/views/availability`.
+8. Repetir el procedimiento con las reservas en [http://localhost:8080/views/availability](http://localhost:8080/views/availability).
 
 Las actualizaciones dependen de que el cliente esté conectado y de que los eventos correspondientes estén correctamente implementados en el servidor y en las vistas.
 
 ---
 
-# 🧪 Pruebas manuales de la API
+## 🧪 Pruebas manuales de la API
 
 Las solicitudes pueden probarse mediante Postman o Thunder Client.
 
@@ -1052,7 +953,7 @@ Las solicitudes pueden probarse mediante Postman o Thunder Client.
 
 ---
 
-# 💾 Persistencia
+## 💾 Persistencia
 
 La información se almacena en **MongoDB** mediante Mongoose.
 
@@ -1090,7 +991,7 @@ La información persiste en MongoDB entre reinicios del servidor.
 
 ---
 
-# 🔒 Seguridad
+## 🔒 Seguridad
 
 Las credenciales de MongoDB se almacenan mediante variables de entorno.
 
@@ -1100,7 +1001,7 @@ El archivo `.env.example` contiene la estructura necesaria para configurar el pr
 
 ---
 
-# 📦 Scripts disponibles
+## 📦 Scripts disponibles
 
 ### Iniciar aplicación
 
@@ -1124,6 +1025,6 @@ Actualmente no se encuentran configurados tests automatizados.
 
 ---
 
-# 👨‍💻 Autor
+## 👨‍💻 Autor
 
 **Julian Jara Aguirre**

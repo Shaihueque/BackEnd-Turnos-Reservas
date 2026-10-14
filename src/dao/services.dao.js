@@ -75,7 +75,7 @@ export async function updateService(id, changes) {
         id,
         changes,
         {
-            new: true,
+            returnDocument: "after",
             runValidators: true
         }
     )

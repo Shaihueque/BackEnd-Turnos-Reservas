@@ -44,17 +44,6 @@ export async function controllerGetBookingById(req, res) {
 
 export async function controllerCreateAddBooking(req, res) {
     try {
-
-        const {clientName, clientEmail, date, time, status} = req.body
-
-        if (
-            !clientName || !clientEmail || !date || !time || !status) {
-            return res.status(400).json({
-                status: "error",
-                message: "Todos los campos son obligatorios"
-            })
-        }
-
         const newBooking = await addBooking(req.body)
 
         const io = req.app.get("io")

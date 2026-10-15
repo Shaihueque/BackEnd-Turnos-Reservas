@@ -146,50 +146,18 @@ socket.on("serviceDeleted", (serviceId) => {
     article.remove()
 })
 
-//Crea reserva
+// Crea reserva
 socket.on("bookingCreated", (booking) => {
+    const bookingsList = document.getElementById("bookings-list");
 
-    const bookingsList = document.getElementById("bookings-list")
+    if (!bookingsList) return;
 
-    if (!bookingsList) return
+    const article = document.createElement("article");
+    article.dataset.bookingId = booking._id;
+    article.innerHTML = renderBooking(booking);
 
-    const article = document.createElement("article")
-
-    article.dataset.bookingId = booking._id
-
-    article.innerHTML = `
-        <h2>Reserva</h2>
-
-        <p>
-            <strong>Cliente:</strong>
-            ${booking.clientName}
-        </p>
-
-        <p>
-            <strong>Email:</strong>
-            ${booking.clientEmail}
-        </p>
-
-        <p>
-            <strong>Fecha:</strong>
-            ${booking.date}
-        </p>
-
-        <p>
-            <strong>Hora:</strong>
-            ${booking.time}
-        </p>
-
-        <p>
-            <strong>Estado:</strong>
-            ${booking.status}
-        </p>
-
-        <hr>
-    `
-
-    bookingsList.appendChild(article)
-})
+    bookingsList.appendChild(article);
+});
 
 //actualizar reserva
 socket.on("bookingUpdated", (booking) => {
@@ -215,59 +183,13 @@ socket.on("bookingDeleted", (bookingId) => {
     article.remove()
 })
 
-//Agregamos servicio a una reserva
+// Agrega un servicio a una reserva
 socket.on("bookingServiceAdded", (booking) => {
-
     const article = document.querySelector(
         `[data-booking-id="${booking._id}"]`
-    )
+    );
 
-    if (!article) return
+    if (!article) return;
 
-    const servicesHTML = booking.services
-        .map(item => `
-            <li>
-                ${item.service.name} × ${item.quantity}
-            </li>
-        `)
-        .join("")
-
-    article.innerHTML = `
-        <h2>Reserva</h2>
-
-        <p>
-            <strong>Cliente:</strong>
-            ${booking.clientName}
-        </p>
-
-        <p>
-            <strong>Email:</strong>
-            ${booking.clientEmail}
-        </p>
-
-        <p>
-            <strong>Fecha:</strong>
-            ${booking.date}
-        </p>
-
-        <p>
-            <strong>Hora:</strong>
-            ${booking.time}
-        </p>
-
-        <p>
-            <strong>Estado:</strong>
-            ${booking.status}
-        </p>
-
-        <p>
-            <strong>Servicios:</strong>
-        </p>
-
-        <ul>
-            ${servicesHTML}
-        </ul>
-
-        <hr>
-    `
-})
+    article.innerHTML = renderBooking(booking);
+});

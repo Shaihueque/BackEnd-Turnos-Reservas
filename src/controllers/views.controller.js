@@ -4,12 +4,12 @@ import {getBookings, getBookingById} from "../services/bookings.service.js"
 export async function controllerGetServicesView(req, res) {
     try {
 
-        const services = await getServices()
+        const result = await getServices();
 
-        res.render("services", {
+         res.render("services", {
             title: "Servicios",
-            services
-        })
+            services: result.services
+        });
 
     } catch (error) {
 

@@ -12,7 +12,7 @@ const serviceSchema = new mongoose.Schema({
 price: {
     type: Number,
     required: true,
-    min: [0, "El precio no puede ser negativo"]
+    min: [0.01, "El precio debe ser mayor que cero"]
 },
   category: { type: String, required: true },
   available: { type: Boolean, default: true }

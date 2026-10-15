@@ -4,8 +4,9 @@ import Booking from "../models/bookings.models.js"
 export async function getBookings() {
     return await Booking.find()
         .populate("services.service")
-        .lean()
+        .lean();
 }
+
 
 // GET: obtiene una reserva por ID
 export async function getBookingById(id) {

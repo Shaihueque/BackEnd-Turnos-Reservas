@@ -200,7 +200,7 @@ Definen los esquemas utilizados para almacenar información en MongoDB.
 Clonar el repositorio:
 
 ```bash
-git clone <URL_DEL_REPOSITORIO>
+git clone https://github.com/Shaihueque/BackEnd-Turnos-Reservas.git
 ```
 
 Ingresar al proyecto:

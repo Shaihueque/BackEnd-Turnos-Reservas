@@ -39,4 +39,25 @@ app.use("/api/bookings", bookingsRouter)
 //Rutas de vistas
 app.use("/views", viewsRouter)
 
+// Middleware global que registra errores inesperados y devuelve una respuesta 500 en formato JSON.
+app.use((error, req, res, next) => {
+    console.error("Error interno del servidor:", error)
+
+    if (res.headersSent) {
+        return next(error)
+    }
+
+    return res.status(500).json({
+        status: "error",
+        message: "Ocurrió un error interno del servidor"
+    })
+})
+
+app.use((req, res) => {
+    return res.status(404).json({
+        status: "error",
+        message: "La ruta solicitada no existe"
+    })
+})
+
 export default app

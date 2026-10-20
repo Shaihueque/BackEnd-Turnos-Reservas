@@ -8,12 +8,13 @@ export async function controllerGetAllServices(req, res) {
 
         res.status(200).json({
             status: "success",
+            message: "Servicios obtenidos correctamente",
             data: result.services,
             pagination: result.pagination
         });
 
     } catch (error) {
-        console.error(error);
+        console.error("Error al obtener los servicios:", error)
 
         res.status(500).json({
             status: "error",
@@ -35,10 +36,11 @@ export async function controllerGetServiceById(req, res) {
 
     res.status(200).json({
       status: "success",
+      message: "Servicio obtenido correctamente",
       data: service
     })
   } catch (error) {
-    console.error(error)
+    console.error("Error al obtener el servicio:", error)
 
     res.status(500).json({
       status: "error",
@@ -59,10 +61,11 @@ export async function controllerCreateAddService(req, res) {
 
     res.status(201).json({
       status: "success",
+      message: "Servicio creado correctamente",
       data: newService
     })
   } catch (error) {
-    console.error(error)
+    console.error("Error al crear el servicio:", error)
 
     res.status(500).json({
       status: "error",
@@ -90,10 +93,11 @@ export async function controllerUpdateService(req, res) {
     
         res.status(200).json({
           status: "success",
+          message: "Servicio actualizado correctamente",
           data: updatedService
         })
       } catch (error) {
-        console.error(error)
+        console.error("Error al actualizar el servicio:", error)
     
         res.status(500).json({
           status: "error",
@@ -124,7 +128,7 @@ export async function controllerDeleteService(req, res) {
         res.status(204).send()
 
     } catch (error) {
-        console.error(error)
+        console.error("Error al eliminar el servicio:", error)
     
         res.status(500).json({
             status: "error",

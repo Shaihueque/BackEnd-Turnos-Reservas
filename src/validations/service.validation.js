@@ -1,9 +1,9 @@
 import { z } from "zod";
 
 export const createServiceSchema = z.object({
-    name: z.string().trim().min(4, "El nombre es obligatorio y mas de  4 caracteres"),
+    name: z.string().trim().min(4, "El nombre es obligatorio y debe tener al menos 4 caracteres"),
 
-    description: z.string().trim().min(10, "La descripción es obligatoria y mas de 10 caracteres"),
+    description: z.string().trim().min(10, "La descripción es obligatoria y debe tener al menos 10 caracteres"),
 
     duration: z.coerce.number()
         .positive("La duración debe ser mayor que cero"),

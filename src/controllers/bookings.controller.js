@@ -6,10 +6,11 @@ export async function controllerGetAllBookings(req, res) {
         
         const bookings = await getBookings()
 
-        res.status(200).json({ status: "success", data: bookings })
+        res.status(200).json({ status: "success", message: "Reservas obtenidas correctamente", data: bookings })
         
     } catch (error) {
-        res.status(500).json({ status: "error", message: error.message })
+         console.error("Error al obtener las reservas:", error)
+        res.status(500).json({ status: "error", message: "No se pudieron obtener las reservas" })
     }
     
 }
@@ -24,20 +25,22 @@ export async function controllerGetBookingById(req, res) {
         if (!booking) {
             return res.status(404).json({
                 status: "error",
-                message: "Booking not found"
+                message: "Reserva no encontrada"
             })
         }
 
         res.status(200).json({
             status: "success",
+            message: "Reserva obtenida correctamente",
             data: booking
         })
 
     } catch (error) {
+         console.error("Error al obtener la reserva:", error)
 
         res.status(500).json({
             status: "error",
-            message: error.message
+            message: "No se pudo obtener la reserva"
         })
     }
 }
@@ -54,13 +57,15 @@ export async function controllerCreateAddBooking(req, res) {
 
         res.status(201).json({
             status: "success",
+            message: "Reserva creada correctamente",
             data: newBooking
         })
 
     } catch (error) {
+        console.error("Error al crear la reserva:", error)
         res.status(500).json({
             status: "error",
-            message: error.message
+            message: "No se pudo crear la reserva"
         })
     }
 }
@@ -75,14 +80,14 @@ export async function controllerAddServiceToBooking(req, res) {
         if (result?.error === "BOOKING_NOT_FOUND") {
             return res.status(404).json({
                 status: "error",
-                message: "Booking not found"
+                message: "Reserva no encontrada"
             })
         }
 
         if (result?.error === "SERVICE_NOT_FOUND") {
             return res.status(404).json({
                 status: "error",
-                message: "Service not found"
+                message: "Servicio no encontrado"
             })
         }
 
@@ -94,14 +99,16 @@ export async function controllerAddServiceToBooking(req, res) {
 
         res.status(200).json({
             status: "success",
+            message: "Servicio agregado a la reserva correctamente",
             data: result
         })
 
     } catch (error) {
+        console.error("Error al agregar el servicio a la reserva:", error)
 
         res.status(500).json({
             status: "error",
-            message: error.message
+            message: "No se pudo agregar el servicio a la reserva"
         })
     }
 }
@@ -112,7 +119,7 @@ export async function controllerUpdateBooking(req, res) {
         const updatedBooking = await updateBooking(bid, req.body)
 
         if (!updatedBooking) {
-            return res.status(404).json({ status: "error", message: "Booking not found" })
+            return res.status(404).json({ status: "error", message: "Reserva no encontrada" })
         }
 
         const io = req.app.get("io")
@@ -121,9 +128,10 @@ export async function controllerUpdateBooking(req, res) {
             io.emit("bookingUpdated", updatedBooking)
         }
 
-        res.status(200).json({ status: "success", data: updatedBooking })
+        res.status(200).json({ status: "success", message: "Reserva actualizada correctamente", data: updatedBooking })
     } catch (error) {
-        res.status(500).json({ status: "error", message: error.message })
+        console.error("Error al actualizar la reserva:", error)
+        res.status(500).json({ status: "error", message: "No se pudo actualizar la reserva" })
     }
 }
 
@@ -135,7 +143,7 @@ export async function controllerDeleteBooking(req, res) {
         if (!deleted) {
             return res.status(404).json({
                 status: "error",
-                message: "Booking not found"
+                message: "Reserva no encontrada"
             })
         }
 
@@ -148,9 +156,10 @@ export async function controllerDeleteBooking(req, res) {
         res.status(204).send()
 
     } catch (error) {
+        console.error("Error al eliminar la reserva:", error)
         res.status(500).json({
             status: "error",
-            message: error.message
+            message: "No se pudo eliminar la reserva"
         })
     }
 }
